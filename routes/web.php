@@ -2,19 +2,33 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
+
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', function () {
+        $role = session('role');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+        if ($role === 'mahasiswa') {
+            return redirect()->route('mahasiswa.dashboard');
+        } elseif ($role === 'karyawan') {
+            return redirect()->route('karyawan.dashboard');
+        }
+
+        return abort(403, 'Unauthorized access');
+    })->name('dashboard');
+
+    Route::get('/mahasiswa/dashboard', function () {
+        return view('mahasiswa.dashboard');
+    })->name('mahasiswa.dashboard');
+
+    Route::get('/karyawan/dashboard', function () {
+        return view('karyawan.dashboard');
+    })->name('karyawan.dashboard');
 });
 
 require __DIR__.'/auth.php';

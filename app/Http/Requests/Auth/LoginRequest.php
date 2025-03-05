@@ -41,7 +41,14 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('nrp', 'password'), $this->boolean('remember'))) {
+        $role = $this->input('role');
+        $identifiedUser = $role === "student" ? "nrp" : "nip";
+        $credentials = [
+            $identifiedUser => $this->input('identifier'), // Use correct field
+            'password' => $this->input('password'),
+        ];
+
+        if (! Auth::attempt($credentials, $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([

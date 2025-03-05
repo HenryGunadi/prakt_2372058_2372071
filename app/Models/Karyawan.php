@@ -7,11 +7,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class Karyawan extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    protected $table = 'mahasiswa';
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable; 
+    protected $table = 'karyawan';
+    protected $primaryKey = 'nip';
+    public $incrementing = false;
+
 
     /**
      * The attributes that are mass assignable.
@@ -19,19 +22,16 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'nrp',
+        'nip',
         'nama',
-        'alamat',
         'email',
         'password',
-        'semester',
-        'id_program_studi',
         'created_at',
         'updated_at',
+        'role_id',
+        'program_studi_id',
     ];
 
-    protected $primaryKey = 'nrp';
-    public $incrementing = false;
 
     /**
      * The attributes that should be hidden for serialization.

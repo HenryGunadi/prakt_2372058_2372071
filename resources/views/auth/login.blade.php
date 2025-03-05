@@ -1,15 +1,21 @@
 <x-guest-layout>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
+    
+    <h2 class="text-xl font-bold text-white mb-4">
+        {{ $role === 'mahasiswa' ? 'Mahasiswa Login' : 'Karyawan Login' }}
+    </h2>
 
     <form method="POST" action="{{ route('login') }}">
         @csrf
+        <!-- Role Selector (Hidden) -->
+        <input type="hidden" name="role" value="{{ $role }}">
 
-        <!-- Email Address -->
+        <!-- nrp or nip -->
         <div>
-            <x-input-label for="nrp" :value="__('NRP')" />
-            <x-text-input id="nrp" class="block mt-1 w-full" type="nrp" name="nrp" :value="old('nrp')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('nrp')" class="mt-2" />
+            <x-input-label for="identifier" :value="$role === 'mahasiswa' ? __('nrp') : __('nip')" />
+            <x-text-input id="identifier" class="block mt-1 w-full" type="text" name="identifier" :value="old('identifier')" required autofocus autocomplete="username" />
+            <x-input-error :messages="$errors->get('identifier')" class="mt-2" />
         </div>
 
         <!-- Password -->
