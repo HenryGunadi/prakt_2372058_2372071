@@ -1,7 +1,6 @@
 <x-guest-layout>
-    <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
-    
+
     <h2 class="text-xl font-bold text-white mb-4">
         {{ $role === 'mahasiswa' ? 'Mahasiswa Login' : 'Karyawan Login' }}
     </h2>

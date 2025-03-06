@@ -12,10 +12,9 @@ return [
     | as required, but they're a perfect start for most applications.
     |
     */
-
     'defaults' => [
-        'guard' => 'mahasiswa', // Set the default guard directly here
-        'passwords' => 'mahasiswa', // Set the default password broker directly here
+        'guard' => 'karyawan', // Change this to 'karyawan' if you want karyawan as default
+        'passwords' => 'karyawan',
     ],
 
     /*
@@ -31,11 +30,11 @@ return [
     'guards' => [
         'mahasiswa' => [
             'driver' => 'session',
-            'provider' => 'mahasiswa',
+            'provider' => 'mahasiswas',
         ],
         'karyawan' => [
             'driver' => 'session',
-            'provider' => 'karyawan',
+            'provider' => 'karyawans',
         ],
     ],
 
@@ -50,11 +49,11 @@ return [
     */
 
     'providers' => [
-        'mahasiswa' => [
+        'mahasiswas' => [
             'driver' => 'eloquent',
             'model' => App\Models\Mahasiswa::class, // Ensure this model exists
         ],
-        'karyawan' => [
+        'karyawans' => [
             'driver' => 'eloquent',
             'model' => App\Models\Karyawan::class, // Ensure this model exists
         ],

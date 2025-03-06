@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Log;
 
 class LoginRequest extends FormRequest
 {
@@ -42,19 +43,31 @@ class LoginRequest extends FormRequest
         $this->ensureIsNotRateLimited();
 
         $role = $this->input('role');
-        $identifiedUser = $role === "student" ? "nrp" : "nip";
+        $identifiedUser = $role === "mahasiswa" ? "nrp" : "nip";
+
         $credentials = [
             $identifiedUser => $this->input('identifier'), // Use correct field
             'password' => $this->input('password'),
         ];
 
-        if (! Auth::attempt($credentials, $this->boolean('remember'))) {
-            RateLimiter::hit($this->throttleKey());
-
-            throw ValidationException::withMessages([
-                'nrp' => trans('auth.failed'),
-            ]);
+         // Explicitly use the guard directly here for authentication
+         if ($role === 'mahasiswa') {
+            if (!Auth::guard('mahasiswa')->attempt($credentials, $this->boolean('remember'))) {
+                RateLimiter::hit($this->throttleKey());
+                throw ValidationException::withMessages([
+                    'identifier' => trans('auth.failed'),
+                ]);
+            }
+        } else {
+            if (!Auth::guard('karyawan')->attempt($credentials, $this->boolean('remember'))) {
+                RateLimiter::hit($this->throttleKey());
+                throw ValidationException::withMessages([
+                    'identifier' => trans('auth.failed'),
+                ]);
+            }
         }
+
+        Log::info("User authenticated successfully!");
 
         RateLimiter::clear($this->throttleKey());
     }

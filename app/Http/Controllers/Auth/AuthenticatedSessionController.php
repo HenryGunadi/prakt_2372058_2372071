@@ -7,7 +7,9 @@ use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Log;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -40,26 +42,31 @@ class AuthenticatedSessionController extends Controller
             'password' => $request->input('password'),
         ];
 
-        // Attempt authentication with appropriate guard
+        // Try to authenticate with the guard
         if (Auth::guard($role)->attempt($credentials, $request->boolean('remember'))) {
-
-            // Regenerate session
             $request->session()->regenerate();
 
-            // Store the active guard in session
-            $request->session()->put('auth_guard', $role);
+            $user = Auth::guard($role)->user();
+            session(['auth_guard' => $role]); // Set the correct guard in the session
 
-            // Redirect to dashboard
-            return redirect()->intended(route('dashboard'));
+            // Debugging: log the role
+            Log::channel('my_logs')->info('User role = ' . $user->role);
+
+            // Redirect based on user role
+            // Assuming your role relationship returns a model with a 'name' property
+            if ($role === 'mahasiswa') {
+                return redirect()->route('mahasiswa.dashboard');
+            } elseif ($role === 'karyawan') {
+                return redirect()->route('karyawan.dashboard');
+            }
         }
 
         // Authentication failed
-        return back()
-            ->withInput($request->only('identifier', 'remember'))
-            ->withErrors([
-                'identifier' => 'The provided credentials do not match our records.',
-            ]);
+        return back()->withErrors([
+            'identifier' => 'Invalid credentials.',
+        ]);
     }
+
 
     /**
      * Destroy an authenticated session.

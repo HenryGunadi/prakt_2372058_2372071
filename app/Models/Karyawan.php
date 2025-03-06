@@ -10,7 +10,7 @@ use Illuminate\Notifications\Notifiable;
 class Karyawan extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable; 
+    use HasFactory, Notifiable;
     protected $table = 'karyawan';
     protected $primaryKey = 'nip';
     public $incrementing = false;
