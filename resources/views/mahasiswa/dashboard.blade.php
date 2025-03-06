@@ -1,7 +1,8 @@
-<!-- resources/views/karyawan/dashboard.blade.php -->
 @extends('layouts.app')
 
+@section('title', 'Mahasiswa Dashboard')
+
 @section('content')
-    <h1>Mahasiswa Dashboard</h1>
-    <p>Welcome, Mahasiswa!</p>
+    <h1>Welcome, {{ $user->nama }}</h1>
+    <p>This is the mahasiswa dashboard.</p>
 @endsection

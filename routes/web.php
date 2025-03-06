@@ -1,34 +1,25 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
 
-
+// Home route
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', function () {
-        $role = session('role');
+// General dashboard (redirects based on role)
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-        if ($role === 'mahasiswa') {
-            return redirect()->route('mahasiswa.dashboard');
-        } elseif ($role === 'karyawan') {
-            return redirect()->route('karyawan.dashboard');
-        }
+// Role-based dashboards
+Route::get('/mahasiswa/dashboard', [DashboardController::class, 'index'])
+    ->name('mahasiswa.dashboard');
 
-        return abort(403, 'Unauthorized access');
-    })->name('dashboard');
+Route::get('/karyawan/dashboard', [DashboardController::class, 'index'])
+    ->name('karyawan.dashboard');
 
-    Route::get('/mahasiswa/dashboard', function () {
-        return view('mahasiswa.dashboard');
-    })->name('mahasiswa.dashboard');
+Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
 
-    Route::get('/karyawan/dashboard', function () {
-        return view('karyawan.dashboard');
-    })->name('karyawan.dashboard');
-});
 
 require __DIR__.'/auth.php';

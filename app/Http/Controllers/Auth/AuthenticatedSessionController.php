@@ -8,64 +8,79 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
-use Symfony\Component\Console\Input\Input;
 
 class AuthenticatedSessionController extends Controller
 {
     /**
      * Display the login view.
      */
-    public function create(Request $request): View
+    public function create(Request $request, $role = null)
     {
-        $role = $request->query('role');
-
-        return view('auth.login', compact('role'));
+        return view('auth.login', ['role' => $role]);
     }
 
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request): RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
-        $role = $request->input('role');
-        $identifiedUser = $role === "mahasiswa" ? 'nrp' : 'nip';
-    
+        $role = $request->input('role', 'mahasiswa');
+        $identifierField = $role === 'mahasiswa' ? 'nrp' : 'nip';
+
+        // Validate the request
+        $request->validate([
+            'identifier' => 'required|string',
+            'password' => 'required|string',
+            'role' => 'required|in:mahasiswa,karyawan',
+        ]);
+
+        // Set up credentials based on role
         $credentials = [
-            $identifiedUser => $request->input('identifier'),
+            $identifierField => $request->input('identifier'),
             'password' => $request->input('password'),
         ];
-    
-        if (!Auth::attempt($credentials)) {
-            return back()->withErrors([
-                'identifier' => 'Invalid credentials.',
-            ]);
-        }
-    
-        $request->session()->put('role', $role);
-        $request->session()->save();
-    
-        if ($role === "karyawan") {
-            $user = Auth::user();
-            $request->session()->put('karyawan_role', $user->role);
-        }
-    
-        $request->session()->regenerate();
-    
-        return redirect()->intended(route('dashboard'));
-    }
 
+        // Attempt authentication with appropriate guard
+        if (Auth::guard($role)->attempt($credentials, $request->boolean('remember'))) {
+
+            // Regenerate session
+            $request->session()->regenerate();
+
+            // Store the active guard in session
+            $request->session()->put('auth_guard', $role);
+
+            // Redirect to dashboard
+            return redirect()->intended(route('dashboard'));
+        }
+
+        // Authentication failed
+        return back()
+            ->withInput($request->only('identifier', 'remember'))
+            ->withErrors([
+                'identifier' => 'The provided credentials do not match our records.',
+            ]);
+    }
 
     /**
      * Destroy an authenticated session.
      */
     public function destroy(Request $request): RedirectResponse
     {
-        Auth::guard('web')->logout();
+        // Get the current guard from session (either 'mahasiswa' or 'karyawan')
+        $guard = session('auth_guard', 'mahasiswa');
 
+        // Logout the user based on the guard
+        if ($guard === 'karyawan') {
+            Auth::guard('karyawan')->logout();
+        } else {
+            Auth::guard('mahasiswa')->logout();
+        }
+
+        // Invalidate the session and regenerate CSRF token
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
 
+        // Redirect user to homepage or desired page after logout
         return redirect('/');
     }
 }

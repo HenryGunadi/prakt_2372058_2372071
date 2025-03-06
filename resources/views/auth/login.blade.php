@@ -8,12 +8,11 @@
 
     <form method="POST" action="{{ route('login') }}">
         @csrf
-        <!-- Role Selector (Hidden) -->
         <input type="hidden" name="role" value="{{ $role }}">
 
         <!-- nrp or nip -->
         <div>
-            <x-input-label for="identifier" :value="$role === 'mahasiswa' ? __('nrp') : __('nip')" />
+            <x-input-label for="identifier" :value="$role === 'mahasiswa' ? __('NRP') : __('NIP')" />
             <x-text-input id="identifier" class="block mt-1 w-full" type="text" name="identifier" :value="old('identifier')" required autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('identifier')" class="mt-2" />
         </div>
