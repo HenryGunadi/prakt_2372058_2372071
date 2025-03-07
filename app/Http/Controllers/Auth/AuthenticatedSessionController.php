@@ -28,6 +28,7 @@ class AuthenticatedSessionController extends Controller
     {
         $role = $request->input('role', 'mahasiswa');
         $identifierField = $role === 'mahasiswa' ? 'nrp' : 'nip';
+        Log::channel('my_logs')->info("User role : " . $role);
 
         // Validate the request
         $request->validate([
@@ -42,25 +43,29 @@ class AuthenticatedSessionController extends Controller
             'password' => $request->input('password'),
         ];
 
+        Log::channel('my_logs')->info("Identifier field : " . $identifierField);
+
         // Try to authenticate with the guard
         if (Auth::guard($role)->attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
 
             $user = Auth::guard($role)->user();
             session(['auth_guard' => $role]); // Set the correct guard in the session
-
-            // Debugging: log the role
-            Log::channel('my_logs')->info('User role = ' . $user->role);
-
+            
             // Redirect based on user role
             // Assuming your role relationship returns a model with a 'name' property
             if ($role === 'mahasiswa') {
+                Log::channel('my_logs')->info("Mahasiswa true");
+                
                 return redirect()->route('mahasiswa.dashboard');
             } elseif ($role === 'karyawan') {
+                Log::channel('my_logs')->info("Karyawan true");
+
                 return redirect()->route('karyawan.dashboard');
             }
         }
 
+        Log::channel('my_logs')->info("Login Failed");
         // Authentication failed
         return back()->withErrors([
             'identifier' => 'Invalid credentials.',
@@ -73,8 +78,12 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
+        $guard = session('auth_guard');
+        Log::channel("my_logs")->info("Guard in logout : " . $guard);
+
         // Get the current guard from session (either 'mahasiswa' or 'karyawan')
-        $guard = session('auth_guard', 'mahasiswa');
+        Log::channel("my_logs")->info("Logout function reached!");
+        Log::channel("my_logs")->info("User: " . json_encode(Auth::user()));
 
         // Logout the user based on the guard
         if ($guard === 'karyawan') {
@@ -88,6 +97,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         // Redirect user to homepage or desired page after logout
+        Log::channel("my_logs")->info("Im here in logout");
         return redirect('/');
     }
 }

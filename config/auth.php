@@ -13,10 +13,9 @@ return [
     |
     */
     'defaults' => [
-        'guard' => 'karyawan', // Change this to 'karyawan' if you want karyawan as default
-        'passwords' => 'karyawan',
+        'guard' => 'mahasiswa', // Change this to 'karyawan' if you want karyawan as default
+        'passwords' => 'mahasiswa',
     ],
-
     /*
     |----------------------------------------------------------------------
     | Authentication Guards
@@ -30,11 +29,11 @@ return [
     'guards' => [
         'mahasiswa' => [
             'driver' => 'session',
-            'provider' => 'mahasiswas',
+            'provider' => 'mahasiswa',
         ],
         'karyawan' => [
             'driver' => 'session',
-            'provider' => 'karyawans',
+            'provider' => 'karyawan',
         ],
     ],
 
@@ -49,11 +48,11 @@ return [
     */
 
     'providers' => [
-        'mahasiswas' => [
+        'mahasiswa' => [
             'driver' => 'eloquent',
             'model' => App\Models\Mahasiswa::class, // Ensure this model exists
         ],
-        'karyawans' => [
+        'karyawan' => [
             'driver' => 'eloquent',
             'model' => App\Models\Karyawan::class, // Ensure this model exists
         ],

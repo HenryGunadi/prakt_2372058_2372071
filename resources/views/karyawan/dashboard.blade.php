@@ -3,7 +3,7 @@
 @section('title', 'Karyawan Dashboard')
 
 @section('content')
-    <div class="text-white">
+    <div class="text-black">
         <h1>Welcome, {{ $user->nama }}</h1>
         <h1>ROLE : {{ $user->role->role}}</h1>
         <p>This is the karyawan dashboard.</p>

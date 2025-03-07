@@ -5,21 +5,23 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\RoleMiddleware;
 
-// Home route
 Route::get('/', function () {
-    return view('welcome'); // or your custom view
-})->name('home');  // You can name it 'home' or any name you prefer
-// Role-based dashboards
-Route::get('/mahasiswa/dashboard', [MahasiswaController::class, 'index'])
-    ->middleware('auth:mahasiswa')
-    ->name('mahasiswa.dashboard');
+    return view('welcome');
+})->name('home');
 
-Route::get('/karyawan/dashboard', [KaryawanController::class, 'index'])
-    ->middleware('auth:karyawan')
-    ->name('karyawan.dashboard');
+Route::middleware(['auth:mahasiswa'])->group(function () {
+    Route::get('/mahasiswa/dashboard', [MahasiswaController::class, 'index'])
+        ->name('mahasiswa.dashboard');
+});
 
+Route::middleware(['auth:karyawan'])->group(function () {
+    Route::get('/karyawan/dashboard', [KaryawanController::class, 'index'])
+        ->name('karyawan.dashboard');
+});
+
+// Profile route
 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-
 
 require __DIR__.'/auth.php';
