@@ -13,8 +13,8 @@ return [
     |
     */
     'defaults' => [
-        'guard' => 'mahasiswa', // Change this to 'karyawan' if you want karyawan as default
-        'passwords' => 'mahasiswa',
+        'guard' => env('AUTH_GUARD', 'web'),
+        'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
     ],
     /*
     |----------------------------------------------------------------------
@@ -27,6 +27,10 @@ return [
     */
 
     'guards' => [
+        'web' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
         'mahasiswa' => [
             'driver' => 'session',
             'provider' => 'mahasiswa',
@@ -48,6 +52,10 @@ return [
     */
 
     'providers' => [
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => env('AUTH_MODEL', App\Models\User::class),
+        ],
         'mahasiswa' => [
             'driver' => 'eloquent',
             'model' => App\Models\Mahasiswa::class, // Ensure this model exists
@@ -69,6 +77,12 @@ return [
     */
 
     'passwords' => [
+        'users' => [
+            'provider' => 'users',
+            'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
+            'expire' => 60,
+            'throttle' => 60,
+        ],
         'mahasiswa' => [
             'provider' => 'mahasiswa',
             'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
