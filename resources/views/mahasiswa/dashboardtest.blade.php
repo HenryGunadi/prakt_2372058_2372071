@@ -18,13 +18,13 @@
     <a class="skip-link sr-only" href="#skip-target">Skip to content</a>
     <div class="page-flex">
         <!-- ! Sidebar -->
-        @include('karyawan.layouts.sidebar')
+        @include('layouts.karyawan.sidebar')
 
         <div class="main-wrapper">
             <!-- ! Main nav -->
-            @include('karyawan.layouts.mainNav')
+            @include('layouts.karyawan.mainNav')
             <!-- ! Main -->
-            @include('karyawan.layouts.main')
+            @include('layouts.karyawan.main')
             <!-- ! Footer -->
             @include('layouts.footer')
         </div>

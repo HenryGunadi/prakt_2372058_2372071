@@ -25,6 +25,12 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(MahasiswaLoginRequest $request): RedirectResponse
     {
+        if (Auth::guard('karyawan')->check()) {
+            Auth::guard('karyawan')->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+        }
+
         $request->authenticate();
 
         $request->session()->regenerate();

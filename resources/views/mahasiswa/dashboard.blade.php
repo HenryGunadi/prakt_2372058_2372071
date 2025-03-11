@@ -1,17 +1,41 @@
-@extends('mahasiswa.layouts.app')
+<!DOCTYPE html>
+<html lang="en">
 
-@section('content')
-    <h2 class="font-semibold text-xl text-white leading-tight">
-        {{ __('Mahasiswa - Dashboard') }}
-    </h2>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elegant Dashboard | Dashboard</title>
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="./img/svg/logo.svg" type="image/x-icon">
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="{{ asset('asset/css/style.min.css')}}">
+  @yield('ExtraCss')
+</head>
+<body>
+    <div class="layer"></div>
+    <!-- ! Body -->
+    <a class="skip-link sr-only" href="#skip-target">Skip to content</a>
+    <div class="page-flex">
+        <!-- ! Sidebar -->
+        @include('mahasiswa.layouts.sidebar')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
+        <div class="main-wrapper">
+            <!-- ! Main nav -->
+            @include('mahasiswa.layouts.mainNav')
+            <!-- ! Main -->
+            @include('mahasiswa.layouts.main')
+            <!-- ! Footer -->
+            @include('layouts.footer')
         </div>
     </div>
-@endsection
+    <!-- Chart library -->
+    <script src="{{ asset('asset/plugins/chart.min.js')}}"></script>
+    <!-- Icons library -->
+    <script src="{{ asset('asset/plugins/feather.min.js')}}"></script>
+    <!-- Custom scripts -->
+    <script src="{{ asset('asset/js/script.js')}}"></script>
+    @yield('ExtraJS')
+</body>
+
+</html>
