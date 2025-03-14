@@ -175,8 +175,8 @@ document.addEventListener("DOMContentLoaded", function () {
     })();
 
     (function () {
-        // var userDdBtnList = document.querySelectorAll('.dropdown-btn');
-        // var userDdList = document.querySelectorAll('.users-item-dropdown');
+        var userDdBtnList = document.querySelectorAll(".dropdown-btn");
+        var userDdList = document.querySelectorAll(".users-item-dropdown");
         var layer = document.querySelector(".layer");
 
         if (userDdList && userDdBtnList) {

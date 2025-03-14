@@ -20,6 +20,14 @@ Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
             return view('mahasiswa.dashboard');
         })->name('dashboard');
 
+        Route::prefix('dashboard')->name('dashboard.')->group(function () {
+            Route::get('surat', [])->name('');
+
+            Route::post('surat', [])->name('');
+        });
+
+
+
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

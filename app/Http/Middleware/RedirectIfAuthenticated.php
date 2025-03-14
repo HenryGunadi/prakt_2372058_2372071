@@ -21,20 +21,16 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
 
-            # Check if guard is authenticated
             if (Auth::guard($guard)->check()) {
 
-                # Super Admin
                 if ($guard === 'karyawan' && Route::is('karyawan.*')) {
                     return redirect()->route('karyawan.dashboard');
                 }
 
-                # Admin
                 elseif ($guard === 'mahasiswa' && Route::is('mahasiswa.*')) {
                     return redirect()->route('mahasiswa.dashboard');
                 }
 
-                # Normal User
                 else {
                     return redirect()->route('/');
                 }
