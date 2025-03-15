@@ -1,0 +1,6 @@
+1. route logout not defined on navigation.blade.php
+2. default app.blade error
+-- finished --
+1. Form submission finished
+2. Handle modal response better
+3. Handle filling nrp manually
