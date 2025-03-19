@@ -33,8 +33,8 @@
             @include('mahasiswa.layouts.mainNav')
             <!-- ! Main -->
             @include('mahasiswa.layouts.main')
-            <!-- ! Footer -->
-            @include('layouts.footer')
+            ! Footer
+            <!-- @include('layouts.footer') -->
         </div>
     </div>
 
