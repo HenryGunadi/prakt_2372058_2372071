@@ -16,13 +16,14 @@ class SuratDetail extends Model
         'keperluan',
         'mata_kuliah',
         'semester',
+        'surat_id'
     ];
 
     protected $primaryKey = 'id';
     public $incrementing = true;
 
     public function detail() {
-        return $this->belongsTo(Surat::class);
+        return $this->belongsTo(Surat::class, 'surat_id', 'id');
     }
 
     protected $casts = [

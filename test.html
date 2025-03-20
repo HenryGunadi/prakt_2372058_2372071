@@ -1,0 +1,176 @@
+-- MySQL Workbench Forward Engineering SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS,
+UNIQUE_CHECKS=0; SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS,
+FOREIGN_KEY_CHECKS=0; SET @OLD_SQL_MODE=@@SQL_MODE,
+SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+-- ----------------------------------------------------- -- Schema
+prakt_2372058_2372071 -- -----------------------------------------------------
+-- ----------------------------------------------------- -- Schema
+prakt_2372058_2372071 -- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `prakt_2372058_2372071` DEFAULT CHARACTER SET utf8 ;
+USE `prakt_2372058_2372071` ; --
+----------------------------------------------------- -- Table
+`prakt_2372058_2372071`.`cache` --
+----------------------------------------------------- DROP TABLE IF EXISTS
+`prakt_2372058_2372071`.`cache` ; CREATE TABLE IF NOT EXISTS
+`prakt_2372058_2372071`.`cache` ( `key` VARCHAR(255) NOT NULL, `value`
+MEDIUMTEXT NOT NULL, `expiration` INT(11) NOT NULL, PRIMARY KEY (`key`)) ENGINE
+= InnoDB DEFAULT CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci; --
+----------------------------------------------------- -- Table
+`prakt_2372058_2372071`.`cache_locks` --
+----------------------------------------------------- DROP TABLE IF EXISTS
+`prakt_2372058_2372071`.`cache_locks` ; CREATE TABLE IF NOT EXISTS
+`prakt_2372058_2372071`.`cache_locks` ( `key` VARCHAR(255) NOT NULL, `owner`
+VARCHAR(255) NOT NULL, `expiration` INT(11) NOT NULL, PRIMARY KEY (`key`))
+ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci; --
+----------------------------------------------------- -- Table
+`prakt_2372058_2372071`.`failed_jobs` --
+----------------------------------------------------- DROP TABLE IF EXISTS
+`prakt_2372058_2372071`.`failed_jobs` ; CREATE TABLE IF NOT EXISTS
+`prakt_2372058_2372071`.`failed_jobs` ( `id` BIGINT(20) UNSIGNED NOT NULL
+AUTO_INCREMENT, `uuid` VARCHAR(255) NOT NULL, `connection` TEXT NOT NULL,
+`queue` TEXT NOT NULL, `payload` LONGTEXT NOT NULL, `exception` LONGTEXT NOT
+NULL, `failed_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(), PRIMARY KEY
+(`id`), UNIQUE INDEX `failed_jobs_uuid_unique` (`uuid` ASC)) ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci; --
+----------------------------------------------------- -- Table
+`prakt_2372058_2372071`.`job_batches` --
+----------------------------------------------------- DROP TABLE IF EXISTS
+`prakt_2372058_2372071`.`job_batches` ; CREATE TABLE IF NOT EXISTS
+`prakt_2372058_2372071`.`job_batches` ( `id` VARCHAR(255) NOT NULL, `name`
+VARCHAR(255) NOT NULL, `total_jobs` INT(11) NOT NULL, `pending_jobs` INT(11) NOT
+NULL, `failed_jobs` INT(11) NOT NULL, `failed_job_ids` LONGTEXT NOT NULL,
+`options` MEDIUMTEXT NULL DEFAULT NULL, `cancelled_at` INT(11) NULL DEFAULT
+NULL, `created_at` INT(11) NOT NULL, `finished_at` INT(11) NULL DEFAULT NULL,
+PRIMARY KEY (`id`)) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4 COLLATE =
+utf8mb4_unicode_ci; -- ----------------------------------------------------- --
+Table `prakt_2372058_2372071`.`jobs` --
+----------------------------------------------------- DROP TABLE IF EXISTS
+`prakt_2372058_2372071`.`jobs` ; CREATE TABLE IF NOT EXISTS
+`prakt_2372058_2372071`.`jobs` ( `id` BIGINT(20) UNSIGNED NOT NULL
+AUTO_INCREMENT, `queue` VARCHAR(255) NOT NULL, `payload` LONGTEXT NOT NULL,
+`attempts` TINYINT(3) UNSIGNED NOT NULL, `reserved_at` INT(10) UNSIGNED NULL
+DEFAULT NULL, `available_at` INT(10) UNSIGNED NOT NULL, `created_at` INT(10)
+UNSIGNED NOT NULL, PRIMARY KEY (`id`), INDEX `jobs_queue_index` (`queue` ASC))
+ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci; --
+----------------------------------------------------- -- Table
+`prakt_2372058_2372071`.`fakultas` --
+----------------------------------------------------- DROP TABLE IF EXISTS
+`prakt_2372058_2372071`.`fakultas` ; CREATE TABLE IF NOT EXISTS
+`prakt_2372058_2372071`.`fakultas` ( `id` INT NOT NULL AUTO_INCREMENT,
+`nama_fakultas` VARCHAR(45) NULL, `created_at` TIMESTAMP NULL, `updated_at`
+TIMESTAMP NULL, PRIMARY KEY (`id`)) ENGINE = InnoDB; --
+----------------------------------------------------- -- Table
+`prakt_2372058_2372071`.`program_studi` --
+----------------------------------------------------- DROP TABLE IF EXISTS
+`prakt_2372058_2372071`.`program_studi` ; CREATE TABLE IF NOT EXISTS
+`prakt_2372058_2372071`.`program_studi` ( `id` INT NOT NULL AUTO_INCREMENT,
+`nama_prodi` VARCHAR(45) NULL DEFAULT NULL, `created_at` TIMESTAMP NULL DEFAULT
+NULL, `updated_at` TIMESTAMP NULL DEFAULT NULL, `fakultas_id` INT NOT NULL,
+PRIMARY KEY (`id`, `fakultas_id`), INDEX `fk_program_studi_fakultas1_idx`
+(`fakultas_id` ASC), CONSTRAINT `fk_program_studi_fakultas1` FOREIGN KEY
+(`fakultas_id`) REFERENCES `prakt_2372058_2372071`.`fakultas` (`id`) ON DELETE
+NO ACTION ON UPDATE NO ACTION) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8; --
+----------------------------------------------------- -- Table
+`prakt_2372058_2372071`.`role` --
+----------------------------------------------------- DROP TABLE IF EXISTS
+`prakt_2372058_2372071`.`role` ; CREATE TABLE IF NOT EXISTS
+`prakt_2372058_2372071`.`role` ( `id` INT(11) NOT NULL, `role` VARCHAR(25) NULL
+DEFAULT NULL, `created_at` TIMESTAMP NULL DEFAULT NULL, `updated_at` TIMESTAMP
+NULL DEFAULT NULL, PRIMARY KEY (`id`)) ENGINE = InnoDB DEFAULT CHARACTER SET =
+utf8; -- ----------------------------------------------------- -- Table
+`prakt_2372058_2372071`.`karyawan` --
+----------------------------------------------------- DROP TABLE IF EXISTS
+`prakt_2372058_2372071`.`karyawan` ; CREATE TABLE IF NOT EXISTS
+`prakt_2372058_2372071`.`karyawan` ( `nip` VARCHAR(8) NOT NULL, `nama`
+VARCHAR(45) NOT NULL, `password` VARCHAR(100) NOT NULL, `email` VARCHAR(45) NOT
+NULL, `created_at` TIMESTAMP NULL DEFAULT NULL, `updated_at` TIMESTAMP NULL
+DEFAULT NULL, `role_id` INT(11) NOT NULL, `program_studi_id` INT NOT NULL,
+PRIMARY KEY (`nip`, `role_id`, `program_studi_id`), INDEX
+`fk_karyawan_role1_idx` (`role_id` ASC), INDEX `fk_karyawan_program_studi1_idx`
+(`program_studi_id` ASC), CONSTRAINT `fk_karyawan_program_studi1` FOREIGN KEY
+(`program_studi_id`) REFERENCES `prakt_2372058_2372071`.`program_studi` (`id`)
+ON DELETE NO ACTION ON UPDATE NO ACTION, CONSTRAINT `fk_karyawan_role1` FOREIGN
+KEY (`role_id`) REFERENCES `prakt_2372058_2372071`.`role` (`id`) ON DELETE NO
+ACTION ON UPDATE NO ACTION) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8; --
+----------------------------------------------------- -- Table
+`prakt_2372058_2372071`.`mahasiswa` --
+----------------------------------------------------- DROP TABLE IF EXISTS
+`prakt_2372058_2372071`.`mahasiswa` ; CREATE TABLE IF NOT EXISTS
+`prakt_2372058_2372071`.`mahasiswa` ( `nrp` VARCHAR(8) NOT NULL, `nama`
+VARCHAR(45) NULL DEFAULT NULL, `alamat` VARCHAR(45) NULL DEFAULT NULL, `email`
+VARCHAR(45) NULL DEFAULT NULL, `password` VARCHAR(100) NULL DEFAULT NULL,
+`semester` INT(11) NULL DEFAULT NULL, `created_at` TIMESTAMP NULL DEFAULT NULL,
+`updated_at` TIMESTAMP NULL DEFAULT NULL, `program_studi_id` INT NOT NULL,
+PRIMARY KEY (`nrp`, `program_studi_id`), INDEX `fk_mahasiswa_program_studi1_idx`
+(`program_studi_id` ASC), CONSTRAINT `fk_mahasiswa_program_studi1` FOREIGN KEY
+(`program_studi_id`) REFERENCES `prakt_2372058_2372071`.`program_studi` (`id`)
+ON DELETE NO ACTION ON UPDATE NO ACTION) ENGINE = InnoDB DEFAULT CHARACTER SET =
+utf8; -- ----------------------------------------------------- -- Table
+`prakt_2372058_2372071`.`migrations` --
+----------------------------------------------------- DROP TABLE IF EXISTS
+`prakt_2372058_2372071`.`migrations` ; CREATE TABLE IF NOT EXISTS
+`prakt_2372058_2372071`.`migrations` ( `id` INT(10) UNSIGNED NOT NULL
+AUTO_INCREMENT, `migration` VARCHAR(255) NOT NULL, `batch` INT(11) NOT NULL,
+PRIMARY KEY (`id`)) ENGINE = InnoDB AUTO_INCREMENT = 4 DEFAULT CHARACTER SET =
+utf8mb4 COLLATE = utf8mb4_unicode_ci; --
+----------------------------------------------------- -- Table
+`prakt_2372058_2372071`.`password_reset_tokens` --
+----------------------------------------------------- DROP TABLE IF EXISTS
+`prakt_2372058_2372071`.`password_reset_tokens` ; CREATE TABLE IF NOT EXISTS
+`prakt_2372058_2372071`.`password_reset_tokens` ( `email` VARCHAR(255) NOT NULL,
+`token` VARCHAR(255) NOT NULL, `created_at` TIMESTAMP NULL DEFAULT NULL, PRIMARY
+KEY (`email`)) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4 COLLATE =
+utf8mb4_unicode_ci; -- ----------------------------------------------------- --
+Table `prakt_2372058_2372071`.`sessions` --
+----------------------------------------------------- DROP TABLE IF EXISTS
+`prakt_2372058_2372071`.`sessions` ; CREATE TABLE IF NOT EXISTS
+`prakt_2372058_2372071`.`sessions` ( `id` VARCHAR(255) NOT NULL, `user_id`
+BIGINT(20) UNSIGNED NULL DEFAULT NULL, `ip_address` VARCHAR(45) NULL DEFAULT
+NULL, `user_agent` TEXT NULL DEFAULT NULL, `payload` LONGTEXT NOT NULL,
+`last_activity` INT(11) NOT NULL, PRIMARY KEY (`id`), INDEX
+`sessions_user_id_index` (`user_id` ASC), INDEX `sessions_last_activity_index`
+(`last_activity` ASC)) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4 COLLATE =
+utf8mb4_unicode_ci; -- ----------------------------------------------------- --
+Table `prakt_2372058_2372071`.`surat_detail` --
+----------------------------------------------------- DROP TABLE IF EXISTS
+`prakt_2372058_2372071`.`surat_detail` ; CREATE TABLE IF NOT EXISTS
+`prakt_2372058_2372071`.`surat_detail` ( `id` INT(11) NOT NULL AUTO_INCREMENT,
+`subjek` VARCHAR(45) NULL DEFAULT NULL, `keperluan` TEXT NULL DEFAULT NULL,
+`created_at` TIMESTAMP NULL DEFAULT NULL, `updated_at` TIMESTAMP NULL DEFAULT
+NULL, `mata_kuliah` VARCHAR(45) NULL DEFAULT NULL, `semester` INT(11) NULL
+DEFAULT NULL, PRIMARY KEY (`id`)) ENGINE = InnoDB AUTO_INCREMENT = 6 DEFAULT
+CHARACTER SET = utf8; -- -----------------------------------------------------
+-- Table `prakt_2372058_2372071`.`surat` --
+----------------------------------------------------- DROP TABLE IF EXISTS
+`prakt_2372058_2372071`.`surat` ; CREATE TABLE IF NOT EXISTS
+`prakt_2372058_2372071`.`surat` ( `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+`jenis` VARCHAR(25) NOT NULL, `status` ENUM('applied', 'rejected', 'approved',
+'finished') NULL DEFAULT NULL, `created_at` TIMESTAMP NULL DEFAULT NULL,
+`updated_at` TIMESTAMP NULL DEFAULT NULL, `id_surat_detail` INT(11) NOT NULL,
+`mahasiswa_nrp` VARCHAR(8) NOT NULL, PRIMARY KEY (`id`), INDEX
+`fk_surat_surat_detail_idx` (`id_surat_detail` ASC), INDEX
+`fk_surat_mahasiswa1_idx` (`mahasiswa_nrp` ASC), CONSTRAINT `fk_surat_detail`
+FOREIGN KEY (`id_surat_detail`) REFERENCES
+`prakt_2372058_2372071`.`surat_detail` (`id`) ON DELETE CASCADE, CONSTRAINT
+`fk_surat_mahasiswa1` FOREIGN KEY (`mahasiswa_nrp`) REFERENCES
+`prakt_2372058_2372071`.`mahasiswa` (`nrp`) ON DELETE NO ACTION ON UPDATE NO
+ACTION) ENGINE = InnoDB AUTO_INCREMENT = 5 DEFAULT CHARACTER SET = utf8; --
+----------------------------------------------------- -- Table
+`prakt_2372058_2372071`.`tu` --
+----------------------------------------------------- DROP TABLE IF EXISTS
+`prakt_2372058_2372071`.`tu` ; CREATE TABLE IF NOT EXISTS
+`prakt_2372058_2372071`.`tu` ( `id` VARCHAR(10) NOT NULL, PRIMARY KEY (`id`))
+ENGINE = InnoDB DEFAULT CHARACTER SET = utf8; --
+----------------------------------------------------- -- Table
+`prakt_2372058_2372071`.`users` --
+----------------------------------------------------- DROP TABLE IF EXISTS
+`prakt_2372058_2372071`.`users` ; CREATE TABLE IF NOT EXISTS
+`prakt_2372058_2372071`.`users` ( `id` BIGINT(20) UNSIGNED NOT NULL
+AUTO_INCREMENT, `name` VARCHAR(255) NOT NULL, `email` VARCHAR(255) NOT NULL,
+`email_verified_at` TIMESTAMP NULL DEFAULT NULL, `password` VARCHAR(255) NOT
+NULL, `remember_token` VARCHAR(100) NULL DEFAULT NULL, `created_at` TIMESTAMP
+NULL DEFAULT NULL, `updated_at` TIMESTAMP NULL DEFAULT NULL, PRIMARY KEY (`id`),
+UNIQUE INDEX `users_email_unique` (`email` ASC)) ENGINE = InnoDB DEFAULT
+CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci; SET
+SQL_MODE=@OLD_SQL_MODE; SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS; SET
+UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

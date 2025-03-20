@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Mahasiswa;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 
 class MahasiswaController extends Controller
 {
@@ -31,6 +32,6 @@ class MahasiswaController extends Controller
         //     return back()->withErrors(['message' => 'You do not have access to this page.']);
         // }
 
-        return view('mahasiswa.dashboard', ['user' => $user]);
+        return view('mahasiswa.dashboard')->with('mahasiswa', $user);
     }
 }

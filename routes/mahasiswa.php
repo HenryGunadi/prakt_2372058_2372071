@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Mahasiswa\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Mahasiswa\ProfileController;
 use App\Http\Controllers\SuratController;
+use App\Http\Controllers\Mahasiswa\MahasiswaController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -17,10 +18,9 @@ Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
 
     // Auth Routes
     Route::middleware('auth:mahasiswa')->group(function () {
-        Route::get('/dashboard', function () {
-            return view('mahasiswa.dashboard');
-        })->name('dashboard');
+        Route::get("/dashboard", [MahasiswaController::class, 'index'])->name('dashboard');
 
+        Route::get('/surat', [SuratController::class, 'index'])->name('surat');
         Route::post('/surat', [SuratController::class, 'store'])->name('surat.post');
 
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

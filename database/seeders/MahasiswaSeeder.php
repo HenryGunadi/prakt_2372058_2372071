@@ -46,7 +46,7 @@ class MahasiswaSeeder extends Seeder
                 'semester' => 4, 
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
-                'program_studi_id' => 5,
+                'program_studi_id' => 2,
             ],
         ]);
     }

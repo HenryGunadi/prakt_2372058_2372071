@@ -1,6 +1,7 @@
-1. route logout not defined on navigation.blade.php
-2. default app.blade error
+* route logout not defined on navigation.blade.php
+* default app.blade error
+* Handle filling student credentials automatically
+* Form submission finished
 -- finished --
-1. Form submission finished
-2. Handle modal response better
-3. Handle filling nrp manually
+* Handle modal response better
+* Handle forms has been submitted on the student page

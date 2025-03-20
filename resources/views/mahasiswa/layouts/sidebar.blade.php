@@ -30,10 +30,7 @@
                     </a>
                     <ul class="cat-sub-menu">
                         <li>
-                            <a href="posts.html">All Posts</a>
-                        </li>
-                        <li>
-                            <a href="new-post.html">Add new post</a>
+                            <a href="{{ route('mahasiswa.surat')}}">All Applications</a>
                         </li>
                     </ul>
                 </li>

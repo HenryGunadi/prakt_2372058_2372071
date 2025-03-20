@@ -6,23 +6,24 @@ use App\Models\Surat;
 use App\Models\SuratDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class SuratController extends Controller
 {
     public function index() {
-        return view('mahasiswa.components.surat');
+        $user = Auth::guard('mahasiswa')->user();
+        
+        return view('mahasiswa.')
+            ->with("mahasiswa", $user);
     }
 
     public function store(Request $request) {
         // Validate based on form type
-        $rules = [
-            'nrp' => 'required|string|max:7',
-            'nama' => 'required|string|max:255',
-        ];
+        $rules = [];
+
+        $user = Auth::guard('mahasiswa')->user();
 
         if ($request->form_type === 'mahasiswa_aktif') {
-            $rules['alamat'] = 'required|string';
-            $rules['semester'] = 'required|integer';
             $rules['keperluan'] = 'required|string';
         } elseif ($request->form_type === 'mata_kuliah') {
             $rules['mata_kuliah'] = 'required|string|max:255';
@@ -33,22 +34,22 @@ class SuratController extends Controller
         }
 
         $request->validate($rules);
+        
+        $surat = Surat::create([
+            'jenis' => $request->form_type,
+            'status' => 'applied',
+            'mahasiswa_nrp' => $user->nrp,
+        ]);
 
-        $user = Auth::guard('mahasiswa')->user();
-
-        $suratDetail = SuratDetail::create([
+        SuratDetail::create([
             'keperluan' => $request->keperluan ?? null,
             'subjek' => $request->subjek ?? null,
             'mata_kuliah' => $request->mata_kuliah ?? null,
-            'semester' => $request->semester ?? null
+            'semester' => $request->$user->semester ?? null,
+            'surat_id' => $surat->id,
         ]);
 
-        Surat::create([
-            'jenis' => $request->form_type,
-            'status' => 'applied',
-            'id_surat_detail' => $suratDetail->id,
-            'mahasiswa_nrp' => $user->nrp,
-        ]);
+        Log::channel("my_logs")->info("Form submitteddd");
 
         return response()->json([
             'message' => 'Form has been created successfully',

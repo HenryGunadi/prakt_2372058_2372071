@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Model\Mahasiswa;
 
 class Surat extends Model
 {
@@ -14,14 +15,13 @@ class Surat extends Model
         'id',
         'jenis',
         'status',
-        'id_surat_detail',
         'mahasiswa_nrp',
     ];
 
     protected $primaryKey = 'id';
     public $incrementing = true;
 
-    public function detail() {
-        return $this->hasOne(SuratDetail::class);
+    public function mahasiswa() {
+        return $this->belongsTo(Mahasiswa::class, 'mahasiswa_nrp', 'nrp');
     }
 }

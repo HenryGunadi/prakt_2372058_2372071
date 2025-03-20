@@ -129,7 +129,7 @@ return [
 
         'my_logs' => [
             'driver' => 'single',
-            'path' => storage_path('logs/my_logs.log'),
+            'path' => storage_path('logs/mylogs.log'),
             'level' => 'debug',
         ],
     ],
