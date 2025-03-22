@@ -10,11 +10,7 @@ use Illuminate\Support\Facades\Log;
 
 class SuratController extends Controller
 {
-    public function index() {
-        $user = Auth::guard('mahasiswa')->user();
-        
-        return view('mahasiswa.')
-            ->with("mahasiswa", $user);
+    public function index(Request $request) {
     }
 
     public function store(Request $request) {
@@ -34,9 +30,22 @@ class SuratController extends Controller
         }
 
         $request->validate($rules);
-        
+
+        $jenis = $request->form_type;
+
+        if ($jenis === "mahasiswa_aktif") {
+            $jenis = "Keterangan Mahasiswa Aktif";
+        } elseif ($jenis === "mata_kuliah") {
+            $jenis = "Pengantar Tugas Mata Kuliah";
+        } elseif ($jenis === "ket_lulus") {
+            $jenis = "Keterangan Lulus";
+        } else {
+            $jenis = "Laporan Hasil Studi";
+        }
+
+
         $surat = Surat::create([
-            'jenis' => $request->form_type,
+            'jenis' => $jenis,
             'status' => 'applied',
             'mahasiswa_nrp' => $user->nrp,
         ]);

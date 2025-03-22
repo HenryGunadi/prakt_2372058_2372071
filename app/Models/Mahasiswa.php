@@ -55,4 +55,8 @@ class Mahasiswa extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function surat() {
+        return $this->hasMany(Surat::class, 'mahasiswa_nrp');
+    }
 }

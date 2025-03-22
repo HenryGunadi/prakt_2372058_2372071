@@ -97,11 +97,13 @@
 
             <div class="mb-3">
                 <label for="nrp" class="form-label">NRP</label>
-                <input type="text" class="form-control" id="nrp" maxlength='7' name='nrp' readonly value="{{ $mahasiswa->nrp }}">
+                <input type="text" class="form-control" id="nrp" maxlength='7' name='nrp' readonly
+                    value="{{ $user->nrp }}">
             </div>
             <div class="mb-3">
                 <label for="nama" class="form-label">Nama</label>
-                <input type="text" class="form-control" id="nama" name='nama' required readonly value="{{ $mahasiswa->nama }}">
+                <input type="text" class="form-control" id="nama" name='nama' required readonly
+                    value="{{ $user->nama }}">
             </div>
 
             <div id="formFields">
@@ -115,8 +117,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
-        const mahasiswa = @json(auth()->user())
-
         let formIsOpen = {
             id: null,
             open: false
@@ -142,10 +142,10 @@
             <input type="hidden" name="form_type" value="mahasiswa_aktif">
             <div class="mb-3">
                 <label for="alamat" class="form-label">Alamat</label>
-                <input type="text" class="form-control" id="alamat" name='alamat' readonly value="{{ $mahasiswa->alamat }}">
+                <input type="text" class="form-control" id="alamat" name='alamat' readonly value="{{ $user->alamat }}">
             </div>
             <label for="semester" class="form-label">Semester : </label>
-            <input type="text" class="form-control" id="semester" name='semester' readonly value="{{ $mahasiswa->semester }}">
+            <input type="text" class="form-control" id="semester" name='semester' readonly value="{{ $user->semester }}">
 
             <label for="keperluan" class="form-label">Keperluan</label>
             <textarea id="keperluan" cols="30" rows="4" class="form-control mb-3" name="keperluan"></textarea>
@@ -203,7 +203,7 @@
             const formObject = Object.fromEntries(formData.entries());
 
             try {
-                const response = await axios.post('http://127.0.0.1:8000/mahasiswa/surat', formData);
+                const response = await axios.post('http://127.0.0.1:8000/user/surat', formData);
                 alert('Form submitted successfully!');
                 console.log(response.data);
             } catch (err) {
@@ -223,7 +223,5 @@
                 dropdown.classList.remove("show");
             }
         });
-
-        
     </script>
 </body>

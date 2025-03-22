@@ -18,10 +18,12 @@
         <div class="sidebar-body">
             <ul class="sidebar-body-menu">
                 <li>
-                    <a class="active" href="/"><span class="icon home" aria-hidden="true"></span>Form Surat</a>
+                    <a class="{{ $view === 'main' ? 'active' : '' }}"
+                        href="{{ route('mahasiswa.dashboard', ['view' => 'main']) }}"><span class="icon home"
+                            aria-hidden="true"></span>Form Surat</a>
                 </li>
                 <li>
-                    <a class="show-cat-btn" href="##">
+                    <a class="show-cat-btn {{ $view === 'surat' ? 'active' : '' }}" href="##">
                         <span class="icon document" aria-hidden="true"></span>Posts
                         <span class="category__btn transparent-btn" title="Open list">
                             <span class="sr-only">Open list</span>
@@ -30,11 +32,11 @@
                     </a>
                     <ul class="cat-sub-menu">
                         <li>
-                            <a href="{{ route('mahasiswa.surat')}}">All Applications</a>
+                            <a href="{{ route('mahasiswa.dashboard', ['view' => 'surat']) }}">All Applications</a>
                         </li>
                     </ul>
                 </li>
-                    <!-- <li>
+                <!-- <li>
                         <a class="show-cat-btn" href="##">
                             <span class="icon folder" aria-hidden="true"></span>Categories
                             <span class="category__btn transparent-btn" title="Open list">
@@ -138,7 +140,10 @@
     <div class="sidebar-footer">
         <a href="##" class="sidebar-user">
             <span class="sidebar-user-img">
-                <picture><source srcset="{{ asset('asset/img/avatar/avatar-illustrated-01.webp')}}" type="image/webp"><img src="{{ asset('asset/img/avatar/avatar-illustrated-01.png')}}" alt="User name"></picture>
+                <picture>
+                    <source srcset="{{ asset('asset/img/avatar/avatar-illustrated-01.webp') }}" type="image/webp"><img
+                        src="{{ asset('asset/img/avatar/avatar-illustrated-01.png') }}" alt="User name">
+                </picture>
             </span>
             <div class="sidebar-user-info">
                 <span class="sidebar-user__title">Nafisa Sh.</span>

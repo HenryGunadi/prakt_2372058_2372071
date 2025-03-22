@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Mahasiswa\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Mahasiswa\ProfileController;
 use App\Http\Controllers\SuratController;
@@ -18,7 +19,7 @@ Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
 
     // Auth Routes
     Route::middleware('auth:mahasiswa')->group(function () {
-        Route::get("/dashboard", [MahasiswaController::class, 'index'])->name('dashboard');
+        Route::get("/dashboard", [DashboardController::class, 'index'])->name('dashboard');
 
         Route::get('/surat', [SuratController::class, 'index'])->name('surat');
         Route::post('/surat', [SuratController::class, 'store'])->name('surat.post');
