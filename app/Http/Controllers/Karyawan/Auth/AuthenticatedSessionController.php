@@ -24,6 +24,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(KaryawanLoginRequest $request): RedirectResponse
     {
+        // logs out if user is not karyawan
         if (Auth::guard('mahasiswa')->check()) {
             Auth::guard('mahasiswa')->logout();
             $request->session()->invalidate();
@@ -31,7 +32,6 @@ class AuthenticatedSessionController extends Controller
         }
 
         $request->authenticate();
-
         $request->session()->regenerate();
 
         return redirect()->intended(route('karyawan.dashboard', absolute: false));

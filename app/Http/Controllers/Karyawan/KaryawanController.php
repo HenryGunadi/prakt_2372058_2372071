@@ -15,9 +15,9 @@ class KaryawanController extends Controller
 
         Log::channel("my_logs")->info("In karyawan controller : " . $guard);
 
-        if (!Auth::guard($guard)->check()) {
-            return redirect()->route('home');
-        }
+        // if (!Auth::guard($guard)->check()) {
+        //     return redirect()->route('home');
+        // }
 
         if ($guard !== 'karyawan') {
             return back()->withErrors([

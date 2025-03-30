@@ -25,6 +25,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(MahasiswaLoginRequest $request): RedirectResponse
     {
+        // logs out if user is not mahasiswa
         if (Auth::guard('karyawan')->check()) {
             Auth::guard('karyawan')->logout();
             $request->session()->invalidate();
@@ -32,7 +33,6 @@ class AuthenticatedSessionController extends Controller
         }
 
         $request->authenticate();
-
         $request->session()->regenerate();
 
         Log::channel("my_logs")->info("Login success as mahasiswa");
