@@ -203,7 +203,7 @@
             const formObject = Object.fromEntries(formData.entries());
 
             try {
-                const response = await axios.post('http://127.0.0.1:8000/user/surat', formData);
+                const response = await axios.post('http://127.0.0.1:8000/mahasiswa/surat', formData);
                 alert('Form submitted successfully!');
                 console.log(response.data);
             } catch (err) {
