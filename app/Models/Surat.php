@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Mahasiswa;
+use App\Models\SuratDetail;
 
 class Surat extends Model
 {
@@ -24,4 +25,9 @@ class Surat extends Model
     public function mahasiswa() {
         return $this->belongsTo(Mahasiswa::class, 'mahasiswa_nrp', 'nrp');
     }
+
+    public function suratDetails()
+{
+    return $this->hasOne(SuratDetail::class, 'surat_id');
+}
 }

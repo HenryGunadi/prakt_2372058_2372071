@@ -65,4 +65,19 @@ class SuratController extends Controller
             'data' => $request->all()
         ]);
     }
+
+    public function approve($id) {
+        $surat = Surat::findOrFail($id);
+        $surat->status = 'approved';
+        $surat->save();
+        return redirect()->route('dashboard.index')->with('success', 'Surat disetujui.');
+    }
+    
+    public function reject($id) {
+        $surat = Surat::findOrFail($id);
+        $surat->status = 'rejected';
+        $surat->save();
+        return redirect()->route('dashboard.index')->with('success', 'Surat ditolak.');
+    }
+    
 }

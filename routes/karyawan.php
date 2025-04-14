@@ -5,6 +5,7 @@ use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\Karyawan\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Karyawan\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SuratController;
 
 
 Route::prefix('karyawan')->name('karyawan.')->group(function () {
@@ -30,9 +31,12 @@ Route::prefix('karyawan')->name('karyawan.')->group(function () {
         // Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         //     ->name('logout');
         Route::get('/surat', [KaryawanController::class, 'index'])->name('surat.index');
+        Route::post('/surat/{id}', [KaryawanController::class, 'handleAction'])->name('karyawan.surat.action');
 
-        Route::post('/surat/{id}/approve', [KaryawanController::class, 'approve'])->name('surat.approve');
-        Route::post('/surat/{id}/reject', [KaryawanController::class, 'reject'])->name('surat.reject');
+        Route::post('/surat/{id}/approve', [SuratController::class, 'approve']);
+        Route::post('/surat/{id}/reject', [SuratController::class, 'reject']);
+
+        Route::get('/riwayat', [KaryawanController::class, 'riwayat'])->name('riwayat');
 
     });
 });

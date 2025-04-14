@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use App\Models\Surat;
 
 class KaryawanController extends Controller
 {
@@ -31,4 +32,27 @@ class KaryawanController extends Controller
         // Debugging user info
         return view('karyawan.dashboard', ['user' => $user]);
     }
+
+
+    public function approve($id)
+    {
+        $surat = Surat::findOrFail($id);
+        $surat->status = 'finished';
+        $surat->save();
+
+        return response()->json(['message' => 'Surat approved successfully.']);
+    }
+
+    public function reject($id)
+    {
+        $surat = Surat::findOrFail($id);
+        $surat->status = 'rejected';
+        $surat->save();
+
+        return response()->json(['message' => 'Surat rejected successfully.']);
+    }
+
+
+
+
 }

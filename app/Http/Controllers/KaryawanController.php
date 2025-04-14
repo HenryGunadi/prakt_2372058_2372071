@@ -10,13 +10,24 @@ class KaryawanController extends Controller
 {
     public function index()
     {
-        $pengajuanSurat = Surat::with('mahasiswa')
-            ->where('status', 'applied')
-            ->get();
-
+        // $pengajuanSurat = Surat::with(['mahasiswa', 'suratDetails']) // load surat details too
+        // ->where('status', 'applied')
+        // ->get();
+        
+        // return view('karyawan.layouts.main', [
+        //     'pengajuanSurat' => $pengajuanSurat,
+        //     'view' => 'main', 
+        // ]);
+        $pengajuanSurat = Surat::with(['mahasiswa', 'suratDetails'])
+        ->where('status', 'applied')
+        ->whereHas('mahasiswa', function ($query) {
+            $query->where('program_studi_id', auth()->user()->program_studi_id);
+        })
+        ->get();
+    
         return view('karyawan.layouts.main', [
             'pengajuanSurat' => $pengajuanSurat,
-            'view' => 'main', 
+            'view' => 'main',
         ]);
     }
 
@@ -28,7 +39,7 @@ class KaryawanController extends Controller
             })
             ->get();
 
-        return view('kaprodi.surat.riwayat', compact('riwayatSurats'));
+        return view('karyawan.layouts.riwayat', compact('riwayatSurats'));
     }
 
     public function cekSurat()
@@ -48,4 +59,18 @@ class KaryawanController extends Controller
         return view('karyawan.dashboard', compact( 'surats'));
     }
 
+    public function handleAction(Request $request, $id)
+    {
+        $surat = Surat::findOrFail($id);
+
+        if ($request->input('action') === 'accept') {
+            $surat->status = 'approved';
+        } elseif ($request->input('action') === 'reject') {
+            $surat->status = 'rejected';
+        }
+
+        $surat->save();
+
+        return back()->with('success', 'Status surat berhasil diperbarui.');
+    }
 }

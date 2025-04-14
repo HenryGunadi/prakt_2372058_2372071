@@ -53,13 +53,13 @@
                     </tr>
                 </thead>
                 <tbody class="bodys">
-                    @if ($surats->isEmpty())
+                    @if ($riwayatSurats->isEmpty())
                         <tr>
                             <td colspan="4" class="text-center">No data available</td>
                         </tr>
                     @else
-                        @foreach ($surats as $surat)
-                        @if ($surat->status == 'applied')
+                        @foreach ($riwayatSurats as $surat)
+                        @if($surat->status == 'approved' || $surat->status == 'rejected')
                             <tr class="users-table-item {{ $surat->status === 'applied' ? 'rowws' : '' }}"
                                 data-id="{{ $surat->id }}"
                                 data-jenis="{{ $surat->jenis }}"
@@ -107,7 +107,7 @@
             </div>
 
             <!-- Accept/Reject Form -->
-            <form id="actionForm" method="POST" >
+            <form id="actionForm" method="POST">
                 @csrf
                 <input type="hidden" name="surat_id" id="suratIdField">
                 <div style="text-align: right;">
