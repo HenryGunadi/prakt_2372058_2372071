@@ -5,8 +5,7 @@
                 <span class="sr-only">Home</span>
                 <span class="icon logo" aria-hidden="true"></span>
                 <div class="logo-text">
-                    <span class="logo-title">Elegant</span>
-                    <span class="logo-subtitle">Dashboard</span>
+                    <span class="logo-subtitle">Mahasiswa</span>
                 </div>
 
             </a>
@@ -24,11 +23,13 @@
                 </li>
                 <li>
                     <a class="show-cat-btn {{ $view === 'surat' ? 'active' : '' }}" href="##">
-                        <span class="icon document" aria-hidden="true"></span>Posts
-                        <span class="category__btn transparent-btn" title="Open list">
+                        <a href="{{ route('mahasiswa.dashboard', ['view' => 'surat']) }}">
+                            <span class="icon document" aria-hidden="true"></span>History
+                        <!-- <span class="category__btn transparent-btn" title="Open list">
                             <span class="sr-only">Open list</span>
                             <span class="icon arrow-down" aria-hidden="true"></span>
-                        </span>
+                        </span> -->
+                        </a>
                     </a>
                     <ul class="cat-sub-menu">
                         <li>
@@ -146,8 +147,8 @@
                 </picture>
             </span>
             <div class="sidebar-user-info">
-                <span class="sidebar-user__title">Nafisa Sh.</span>
-                <span class="sidebar-user__subtitle">Support manager</span>
+                <span class="sidebar-user__title">{{ Auth::user()->nama}}</span>
+                <span class="sidebar-user__subtitle">{{ Auth::user()->nrp}}</span>
             </div>
         </a>
     </div>
