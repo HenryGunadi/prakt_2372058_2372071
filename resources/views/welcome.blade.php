@@ -1519,13 +1519,13 @@
     @endif
 </head>
 
-<body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex items-center justify-center min-h-screen px-6 py-12">
+<body class="bg-cover bg-center bg-no-repeat bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex items-center justify-center min-h-screen px-6 py-12" style="background-image: url('{{ asset('storage/bg.jpg') }}');">
     <div class="max-w-5xl w-full grid lg:grid-cols-2 gap-8 items-center">
         <!-- Left Side: Info & Login Buttons -->
         <div class="space-y-6">
             <header class="text-center lg:text-left">
                 <h1 class="text-4xl font-bold tracking-tight text-[#1b1b18] dark:text-white">
-                    Welcome to Laravel Portal
+                    Universitas Kristen Maranatha
                 </h1>
                 <p class="mt-2 text-base text-gray-600 dark:text-gray-300">
                     Please choose your login method below to get started.
@@ -1546,26 +1546,19 @@
                     Go to Dashboard
                 </a>
             @else
-                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <div class="flex flex-col sm:flex-col gap-6 justify-right lg:justify-start">
                     <a href="{{ route('mahasiswa.login') }}"
                         class="flex items-center justify-center px-6 py-2 border border-[#1b1b18] dark:border-white text-[#1b1b18] dark:text-white rounded-md hover:bg-[#1b1b18] hover:text-white dark:hover:bg-white dark:hover:text-black transition">
-                        🎓 Student Login
+                        Student Login
                     </a>
 
                     <a href="{{ route('karyawan.login') }}"
                         class="flex items-center justify-center px-6 py-2 border border-[#1b1b18] dark:border-white text-[#1b1b18] dark:text-white rounded-md hover:bg-[#1b1b18] hover:text-white dark:hover:bg-white dark:hover:text-black transition">
-                        🧑‍💼 Employee Login
+                        Employee Login
                     </a>
                 </div>
             @endauth
         </div>
-
-        <!-- Right Side: Laravel Image -->
-        <div class="hidden lg:block">
-            <img src="{{ asset('storage/image.png') }}" alt="Laravel" class="w-full h-auto rounded-xl shadow-lg">
-        </div>
     </div>
 </body>
-
-
 </html>

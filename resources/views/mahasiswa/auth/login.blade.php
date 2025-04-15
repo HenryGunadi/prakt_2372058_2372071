@@ -10,6 +10,8 @@
     <form method="POST" action="{{ route('mahasiswa.login') }}">
         @csrf
 
+        <h1 class="text-center text-xl font-semibold mb-4">Login - Mahasiswa</h1>
+
         <!-- Email Address -->
         <div>
             <x-input-label for="nrp" :value="__('NRP')" />

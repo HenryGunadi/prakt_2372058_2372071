@@ -11,6 +11,7 @@
     <form method="POST" action="{{ route('karyawan.login') }}">
         @csrf
 
+        <h1 class="text-center text-xl font-semibold mb-4">Login - Karyawan</h1>
         <!-- Email Address -->
         <div>
             <x-input-label for="nip" :value="__('NIP')" />
