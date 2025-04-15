@@ -95,4 +95,59 @@ class KaryawanController extends Controller
         
         return back()->with('success', 'Status surat berhasil diperbarui.');
     }
+
+    public function suratUntukTU(Request $request)
+    {
+        $view = $request->query('view', 'main');
+        $guard = session('auth_guard', 'karyawan');
+        $user = Auth::guard($guard)->user();
+
+        $surats = Surat::with('mahasiswa')
+            ->where('status', 'approved')
+            ->whereNull('file_surat') 
+            ->whereHas('mahasiswa', function ($query)  {
+                $query->where('program_studi_id', auth()->user()->program_studi_id);
+            })
+            ->get();
+
+        return view('karyawan.layouts.surat_tu', compact('surats', 'main'));
+    }
+
+    public function riwayatSuratTU()
+    {
+        $userProdiId = Auth::user()->program_studi_id;
+
+        $surats = Surat::with('mahasiswa')
+            ->where('status', 'finished') 
+            ->whereHas('mahasiswa', function ($query) use ($userProdiId) {
+                $query->where('program_studi_id', $userProdiId);
+            })
+            ->get();
+
+        return view('karyawan.layouts.riwayat_tu', compact('surats'));
+    }
+
+
+    public function uploadSurat(Request $request, $id)
+    {
+        $request->validate([
+            'file_surat' => 'required|mimes:pdf|max:2048',
+        ]);
+
+        $surat = Surat::findOrFail($id);
+
+        if ($request->hasFile('file_surat')) {
+            $file = $request->file('file_surat');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->storeAs('public/surat', $filename); 
+
+            $surat->file_surat = $filename;
+            $surat->status = 'finished'; 
+            $surat->save();
+        }
+
+        return back()->with('success', 'Surat berhasil diupload dan dikirim ke mahasiswa.');
+    }
+
+
 }

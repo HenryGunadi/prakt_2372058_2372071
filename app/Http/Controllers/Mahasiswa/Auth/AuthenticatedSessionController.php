@@ -48,6 +48,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect()->route('mahasiswa.login');
+        return redirect()->to('http://127.0.0.1:8000');
     }
 }

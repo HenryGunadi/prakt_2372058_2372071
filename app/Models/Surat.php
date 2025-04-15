@@ -27,7 +27,13 @@ class Surat extends Model
     }
 
     public function suratDetails()
-{
-    return $this->hasOne(SuratDetail::class, 'surat_id');
-}
+    {
+        return $this->hasOne(SuratDetail::class, 'surat_id');
+    }
+
+    public function programStudi()
+    {
+        return $this->belongsTo(ProgramStudi::class, 'program_studi_id');
+    }
+
 }

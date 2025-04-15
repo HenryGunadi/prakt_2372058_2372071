@@ -45,7 +45,8 @@ class AuthenticatedSessionController extends Controller
         Auth::guard('karyawan')->logout();
 
         $request->session()->regenerateToken();
+        $request->session()->invalidate();
 
-        return redirect()->route('karyawan.login');
+        return redirect()->to('http://127.0.0.1:8000');
     }
 }

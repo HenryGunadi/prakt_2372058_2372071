@@ -19,15 +19,21 @@
     <div class="page-flex">
         <!-- ! Sidebar -->
         @include('karyawan.layouts.sidebar')
-
         <div class="main-wrapper">
-            <!-- ! Main nav -->
             @include('karyawan.layouts.mainNav')
-            <!-- ! Main -->
-            @includeWhen($view === 'main', 'karyawan.layouts.surat')
-            @includeWhen($view === 'history', 'karyawan.layouts.riwayat')
-            <!-- ! Footer -->
-            @include('layouts.footer')
+
+            @if (Auth::user()->role->role === 'kaprodi')
+                <!-- Show content for 'kaprodi' -->
+                @includeWhen($view === 'main', 'karyawan.layouts.surat')
+                @includeWhen($view === 'history', 'karyawan.layouts.riwayat')
+            @elseif (Auth::user()->role->role === 'tu')
+                <!-- Show content for 'tu' -->
+                @includeWhen($view === 'main', 'karyawan.layouts.surat_tu')
+                @includeWhen($view === 'history', 'karyawan.layouts.riwayat_tu')
+            @else
+                <!-- Default Content if the role doesn't match -->
+                <p>Access Denied or Default View</p>
+            @endif
         </div>
     </div>
     <!-- Chart library -->

@@ -12,7 +12,7 @@ class Role extends Model
     protected $table = 'role';
 
     protected $fillable = [
-        'role', // Tidak perlu menyertakan 'id', 'created_at', dan 'updated_at'
+        'role', 
     ];
 
     protected $primaryKey = 'id';

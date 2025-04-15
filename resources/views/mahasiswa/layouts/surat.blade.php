@@ -57,15 +57,15 @@
                             </td>
                             <td>{{ $surat->created_at->format('d M Y')}}</td>
                             <td>
-                                <span class="p-relative">
-                                    <button class="dropdown-btn transparent-btn" type="button" title="More info">
-                                        <div class="sr-only">More info</div>
-                                        <i data-feather="more-horizontal" aria-hidden="true"></i>
-                                    </button>
-                                    <ul class="users-item-dropdown dropdown">
-                                        <li><a href="##">Details</a></li>
-                                    </ul>
-                                </span>
+                                @if ($surat->status === 'approved')
+                                    <span class="text-warning">On Progress</span>
+                                @elseif ($surat->status === 'rejected')
+                                    <span class="text-danger">Ditolak</span>
+                                @elseif ($surat->status === 'finished' && $surat->file_surat)
+                                    <a href="{{ asset('storage/surat/' . $surat->file_surat) }}" class="btn btn-success" target="_blank">Download Surat</a>
+                                @else
+                                    <span class="text-muted">Waiting</span>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
