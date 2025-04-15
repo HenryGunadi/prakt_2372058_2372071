@@ -25,15 +25,14 @@
     <div class="container">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
             <h2 class="main-title">Pengajuan Surat Mahasiswa</h2>
-            <!-- <div>
+            <div>
                 <label for="statusFilter">Filter Status:</label>
                 <select id="statusFilter" style="padding: 6px 10px; border-radius: 6px;">
                     <option value="all">All</option>
-                    <option value="applied">Applied</option>
                     <option value="rejected">Rejected</option>
                     <option value="approved">Approved</option>
                 </select>
-            </div> -->
+            </div>
         </div>
 
         @if (session('success'))

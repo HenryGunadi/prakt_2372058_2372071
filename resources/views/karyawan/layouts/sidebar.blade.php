@@ -22,7 +22,7 @@
                 </a>
             </li>
             <li>
-                <a class="show-cat-btn" href="{{ route('karyawan.riwayat') }}">
+                <a href="{{ route('karyawan.dashboard', ['view' => 'history']) }}">
                     <span class="icon document" aria-hidden="true"></span>History
                 </a>
             </li>
@@ -36,7 +36,6 @@
             </span>
             <div class="sidebar-user-info">
                 <span class="sidebar-user__title">{{ Auth::user()->nama}}</span>
-                <span class="sidebar-user__subtitle">Support manager</span>
             </div>
         </a>
     </div>

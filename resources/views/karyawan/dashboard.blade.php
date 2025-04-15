@@ -24,7 +24,8 @@
             <!-- ! Main nav -->
             @include('karyawan.layouts.mainNav')
             <!-- ! Main -->
-            @include('karyawan.layouts.surat')
+            @includeWhen($view === 'main', 'karyawan.layouts.surat')
+            @includeWhen($view === 'history', 'karyawan.layouts.riwayat')
             <!-- ! Footer -->
             @include('layouts.footer')
         </div>

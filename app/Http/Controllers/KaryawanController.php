@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Surat;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SuratApprovedMail;
 
 class KaryawanController extends Controller
 {
@@ -31,18 +33,23 @@ class KaryawanController extends Controller
         ]);
     }
 
-    public function riwayat()
-    {
+    public function riwayat(Request $request)
+    {   
+        $view = $request->query('view', 'main');
+        $guard = session('auth_guard', 'karyawan');
+        $user = Auth::guard($guard)->user();
+        $surats = $user->surat;
+
         $riwayatSurats = Surat::whereIn('status', ['approved', 'rejected'])
             ->whereHas('mahasiswa', function ($query) {
                 $query->where('program_studi_id', auth()->user()->program_studi_id);
             })
             ->get();
 
-        return view('karyawan.layouts.riwayat', compact('riwayatSurats'));
+        return view('karyawan.dashboard', compact('riwayatSurats', 'view'));
     }
 
-    public function cekSurat()
+    public function cekSurat(Request $request)
     {
         $userProgramStudiId = Auth::user()->program_studi_id;
 
@@ -56,7 +63,20 @@ class KaryawanController extends Controller
         //     'surats' => $surats,
         //     'view' => 'cekSurat',
         // ]);
-        return view('karyawan.dashboard', compact( 'surats'));
+
+        $view = $request->query('view', 'main');
+        $guard = session('auth_guard', 'karyawan');
+        $user = Auth::guard($guard)->user();
+
+        $riwayatSurats = Surat::whereIn('status', ['approved', 'rejected'])
+            ->whereHas('mahasiswa', function ($query) {
+                $query->where('program_studi_id', auth()->user()->program_studi_id);
+            })
+            ->get();
+
+        // dd($view);
+
+        return view('karyawan.dashboard', compact( 'surats', 'riwayatSurats', 'view'));
     }
 
     public function handleAction(Request $request, $id)
@@ -71,6 +91,8 @@ class KaryawanController extends Controller
 
         $surat->save();
 
+        Mail::to("2372058@maranatha.ac.id")->send(new SuratApprovedMail($surat));
+        
         return back()->with('success', 'Status surat berhasil diperbarui.');
     }
 }

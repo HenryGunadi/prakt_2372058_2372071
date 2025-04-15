@@ -59,4 +59,6 @@ class Mahasiswa extends Authenticatable
     public function surat() {
         return $this->hasMany(Surat::class, 'mahasiswa_nrp');
     }
+
+    
 }

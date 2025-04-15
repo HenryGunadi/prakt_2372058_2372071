@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\Models\Surat;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SuratApprovedMail;
 
 class KaryawanController extends Controller
 {
@@ -39,7 +41,6 @@ class KaryawanController extends Controller
         $surat = Surat::findOrFail($id);
         $surat->status = 'finished';
         $surat->save();
-
         return response()->json(['message' => 'Surat approved successfully.']);
     }
 
@@ -51,8 +52,4 @@ class KaryawanController extends Controller
 
         return response()->json(['message' => 'Surat rejected successfully.']);
     }
-
-
-
-
 }
