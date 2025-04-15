@@ -1519,7 +1519,7 @@
     @endif
 </head>
 
-<body class="bg-cover bg-center bg-no-repeat bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex items-center justify-center min-h-screen px-6 py-12" style="background-image: url('{{ asset('storage/bg.jpg') }}');">
+<body class="bg-cover bg-center bg-no-repeat bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex items-center justify-center min-h-screen px-6 py-12" >
     <div class="max-w-5xl w-full grid lg:grid-cols-2 gap-8 items-center">
         <!-- Left Side: Info & Login Buttons -->
         <div class="space-y-6">

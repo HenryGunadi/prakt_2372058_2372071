@@ -128,8 +128,8 @@ class KaryawanController extends Controller
     }
 
 
-    public function uploadSurat(Request $request, $id)
-    {
+    public function uploadSurat(Request $request, $id) 
+        {
         $request->validate([
             'file_surat' => 'required|mimes:pdf|max:2048',
         ]);
@@ -139,15 +139,13 @@ class KaryawanController extends Controller
         if ($request->hasFile('file_surat')) {
             $file = $request->file('file_surat');
             $filename = time() . '_' . $file->getClientOriginalName();
-            $file->storeAs('public/surat', $filename); 
+            $file->storeAs('surat', $filename, 'public'); 
 
-            $surat->file_surat = $filename;
+            $surat->file_pdf = $filename;
             $surat->status = 'finished'; 
             $surat->save();
         }
-
-        return back()->with('success', 'Surat berhasil diupload dan dikirim ke mahasiswa.');
+        
+        return redirect()->back()->with('success', 'Surat berhasil diupload dan dikirim ke mahasiswa.');
     }
-
-
 }

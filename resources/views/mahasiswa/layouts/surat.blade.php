@@ -61,10 +61,10 @@
                                     <span class="text-warning">On Progress</span>
                                 @elseif ($surat->status === 'rejected')
                                     <span class="text-danger">Ditolak</span>
-                                @elseif ($surat->status === 'finished' && $surat->file_surat)
-                                    <a href="{{ asset('storage/surat/' . $surat->file_surat) }}" class="btn btn-success" target="_blank">Download Surat</a>
+                                @elseif ($surat->status === 'finished' && $surat->file_pdf)
+                                    <a href="{{ route('mahasiswa.surat.download', $surat->file_pdf) }}" class="btn btn-success" style="font-size: 12px;">Download Surat</a>
                                 @else
-                                    <span class="text-muted">Waiting</span>
+                                    <span class="text-primary">Waiting</span>
                                 @endif
                             </td>
                         </tr>

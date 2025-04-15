@@ -17,6 +17,7 @@ class Surat extends Model
         'jenis',
         'status',
         'mahasiswa_nrp',
+        'file_pdf',
     ];
 
     protected $primaryKey = 'id';

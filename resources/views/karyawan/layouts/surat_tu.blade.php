@@ -132,7 +132,7 @@
             document.getElementById('modalDate').textContent = tanggal;
 
             const suratId = row.dataset.id;
-            document.getElementById('actionForm').action = `/karyawan/surat/${suratId}`;
+            document.getElementById('actionForm').action = "{{ route('karyawan.tu.upload', ['id' => '__ID__']) }}".replace('__ID__', suratId);
             document.getElementById('suratIdField').value = suratId;
 
             setOptionalField("modalSubjek", row.dataset.subjek);

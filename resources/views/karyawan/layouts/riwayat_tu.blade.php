@@ -52,8 +52,8 @@
                         </tr>
                     @else
                         @foreach ($surats as $surat)
-                        @if ($surat->status == 'approved')
-                            <tr class="users-table-item {{ $surat->status === 'approved' ? 'rowws' : '' }}"
+                        @if ($surat->status == 'finished')
+                            <tr class="users-table-item {{ $surat->status === 'finished' ? 'rowws' : '' }}"
                                 data-id="{{ $surat->id }}"
                                 data-jenis="{{ $surat->jenis }}"
                                 data-nama="{{ $surat->mahasiswa->nama }}"
@@ -68,7 +68,7 @@
                             >
                                 <td><h5>{{ $surat->jenis }}</h5></td>
                                 <td>
-                                    <span class="{{ $surat->status === 'approved' ? 'badge-success' : ($surat->status === 'rejected' ? 'badge-trashed' : ($surat->status === 'approved' ? 'badge-success' : 'badge-active')) }}">
+                                    <span class="{{ $surat->status === 'finished' ? 'badge-success' : ($surat->status === 'rejected' ? 'badge-trashed' : ($surat->status === 'finished' ? 'badge-success' : 'badge-active')) }}">
                                         {{ ucfirst($surat->status) }}
                                     </span>
                                 </td>
@@ -101,6 +101,8 @@
             <form id="actionForm" method="POST" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="surat_id" id="suratIdField">
+                <div>
+                    <!-- optional buttons or actions here -->
                 </div>
             </form>
         </div>
@@ -110,6 +112,7 @@
 <script>
     document.querySelectorAll('.posts-table tbody tr').forEach(row => {
         row.addEventListener('click', () => {
+            console.log('Row clicked:', row);
             const jenis = row.dataset.jenis;
             const nama = row.dataset.nama;
             const status = row.dataset.status;
@@ -130,7 +133,7 @@
             setOptionalField("modalSemester", row.dataset.semester);
 
             const buttonContainer = document.querySelector('#actionForm div');
-            if (status.toLowerCase() === 'approved') {
+            if (status.toLowerCase() === 'finished') {
                 buttonContainer.style.display = 'block';
             } else {
                 buttonContainer.style.display = 'none';

@@ -7,6 +7,7 @@ use App\Models\SuratDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class SuratController extends Controller
 {
@@ -79,5 +80,18 @@ class SuratController extends Controller
         $surat->save();
         return redirect()->route('dashboard.index')->with('success', 'Surat ditolak.');
     }
+
+
+    public function download($filename)
+    {
+        $path = 'surat/' . $filename;
+
+        if (!Storage::disk('public')->exists($path)) {
+            abort(404);
+        }
+
+        return Storage::disk('public')->download($path);
+    }
+
     
 }

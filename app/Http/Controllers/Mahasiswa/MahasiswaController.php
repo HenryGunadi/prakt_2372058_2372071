@@ -23,4 +23,5 @@ class MahasiswaController extends Controller
 
         return view('mahasiswa.surat.index', compact('surats', 'status'));
     }
+    
 }

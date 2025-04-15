@@ -15,6 +15,7 @@ Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
             ->name('login');
 
         Route::post('login', [AuthenticatedSessionController::class, 'store']);
+        
     });
 
     // Auth Routes
@@ -29,6 +30,8 @@ Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
         Route::put('password', [PasswordController::class, 'update'])->name('password.update');
+        Route::get('/download/surat/{filename}', [SuratController::class, 'download'])->name('surat.download');
+
 
         // Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         //     ->name('logout');
