@@ -93,5 +93,16 @@ class SuratController extends Controller
         return Storage::disk('public')->download($path);
     }
 
-    
+    public function edit(Request $request, $id)
+    {
+        $surat = Surat::findOrFail($id);
+        $suratDetail = $surat->suratDetails();
+        if ($request->input('action') === 'edit') {
+            $surat->status = 'approved';
+        } elseif ($request->input('action') === 'delete') {
+            $suratDetail->delete();
+            $surat->delete();
+            return redirect()->back()->with('success', 'Surat berhasil didelete');
+        }
+    }
 }

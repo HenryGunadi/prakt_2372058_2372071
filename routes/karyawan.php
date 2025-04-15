@@ -43,5 +43,7 @@ Route::prefix('karyawan')->name('karyawan.')->group(function () {
         Route::get('/tu/riwayat', [KaryawanController::class, 'riwayatSuratTU'])->name('tu.riwayat');
 
         Route::post('/tu/surat/{id}', [KaryawanController::class, 'uploadSurat'])->name('tu.upload');
+
+        
     });
 });

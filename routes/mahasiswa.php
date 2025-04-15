@@ -32,7 +32,7 @@ Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
         Route::put('password', [PasswordController::class, 'update'])->name('password.update');
         Route::get('/download/surat/{filename}', [SuratController::class, 'download'])->name('surat.download');
 
-
+        Route::post('/edit/{id}', [SuratController::class, 'edit'])->name('surat.edit');
         // Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         //     ->name('logout');
     });
