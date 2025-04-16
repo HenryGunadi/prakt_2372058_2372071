@@ -25,8 +25,8 @@ Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
         Route::get('/surat', [SuratController::class, 'index'])->name('surat');
         Route::post('/surat', [SuratController::class, 'store'])->name('surat.post');
 
-        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
         Route::put('password', [PasswordController::class, 'update'])->name('password.update');
@@ -35,5 +35,10 @@ Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
         Route::post('/edit/{id}', [SuratController::class, 'edit'])->name('surat.edit');
         // Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         //     ->name('logout');
+        
+        Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
     });
+
+    
 });

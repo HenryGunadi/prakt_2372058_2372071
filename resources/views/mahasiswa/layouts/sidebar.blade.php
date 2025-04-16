@@ -148,7 +148,7 @@
             </span>
             <div class="sidebar-user-info">
                 <span class="sidebar-user__title">{{ Auth::user()->nama}}</span>
-                <span class="sidebar-user__subtitle">{{ Auth::user()->nrp}}</span>
+                <span class="sidebar-user__subtitle">{{ Auth::user()->programStudi->nama_prodi }}</span>
             </div>
         </a>
     </div>

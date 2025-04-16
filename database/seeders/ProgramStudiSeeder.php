@@ -15,12 +15,12 @@ class ProgramStudiSeeder extends Seeder
     public function run(): void
     {
         DB::table('program_studi')->insert([
-            // [
-            //     'nama_prodi' => 'Teknik Informatika',
-            //     'created_at' => Carbon::now(),
-            //     'updated_at' => Carbon::now(),
-            //     'fakultas_id' => 1,
-            // ], 
+            [
+                'nama_prodi' => 'Teknik Informatika',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'fakultas_id' => 1,
+            ], 
             [
                 'nama_prodi' => 'Sistem Informasi',
                 'created_at' => Carbon::now(),

@@ -8,13 +8,23 @@ use Illuminate\Database\Eloquent\Model;
 class ProgramStudi extends Model
 {
     use HasFactory;
-    protected $table = 'program_studi'; 
 
-    protected $fillable = [
-        'nama_prodi', 
-    ];
+    protected $table = 'program_studi';
 
-    protected $primaryKey = 'id';
-    public $incrementing = true;
+    protected $fillable = ['nama_prodi', 'fakultas_id'];
 
+    public function fakultas()
+    {
+        return $this->belongsTo(Fakultas::class);
+    }
+
+    public function mahasiswa()
+    {
+        return $this->hasMany(Mahasiswa::class);
+    }
+
+    public function karyawan()
+    {
+        return $this->hasMany(Karyawan::class);
+    }
 }

@@ -5,9 +5,16 @@
                 <span class="sr-only">Home</span>
                 <span class="icon logo" aria-hidden="true"></span>
                 <div class="logo-text">
-                    <span class="logo-title">Kaprodi</span>
+                <span class="logo-subtitle">
+                    @if(Auth::user()->role->role === 'kaprodi')
+                        Kaprodi
+                    @elseif(Auth::user()->role->role === 'tu')
+                        Tata Usaha
+                    @else
+                        {{ Auth::user()->role->role }}
+                    @endif
+                </span>
                 </div>
-
             </a>
             <button class="sidebar-toggle transparent-btn" title="Menu" type="button">
                 <span class="sr-only">Toggle menu</span>
@@ -36,6 +43,7 @@
             </span>
             <div class="sidebar-user-info">
                 <span class="sidebar-user__title">{{ Auth::user()->nama}}</span>
+                <span class="sidebar-user__subtitle">{{ Auth::user()->programStudi->nama_prodi }}</span>
             </div>
         </a>
     </div>

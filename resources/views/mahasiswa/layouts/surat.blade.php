@@ -109,12 +109,10 @@
             <div style="text-align: right;">
                 @if ($surat->status === 'applied')
                     <button name="action" value="delete" type="submit"
-                        onclick="setFormMethod('DELETE')"
                         style="background-color: #e74c3c; color: white; padding: 8px 14px; border: none; border-radius: 6px; margin-right: 8px;">
                         Delete
                     </button>
                     <button id="openEditModal" name="action" value="edit" type="button"
-                        onclick="setFormMethod('PUT')"
                         style="background-color: #2ecc71; color: white; padding: 8px 14px; border: none; border-radius: 6px;">
                         Edit
                     </button>

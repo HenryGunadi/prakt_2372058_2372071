@@ -56,6 +56,26 @@ class KaryawanSeeder extends Seeder
                 'program_studi_id' => 3,
                 'role_id' => 2,
             ],
+            [
+                'nip' => 7282001,
+                'nama' => 'Scoups',
+                'email' => '7292001@maranatha.ac.id',
+                'password' => Hash::make('password'),
+                'created_at' => now(),
+                'updated_at' => now(),
+                'program_studi_id' => 2,
+                'role_id' => 1,
+            ],
+            [
+                'nip' => 7282002,
+                'nama' => 'Doyoung',
+                'email' => '7292002@maranatha.ac.id',
+                'password' => Hash::make('password'),
+                'created_at' => now(),
+                'updated_at' => now(),
+                'program_studi_id' => 2,
+                'role_id' => 2,
+            ],
         ]);
     }
 }

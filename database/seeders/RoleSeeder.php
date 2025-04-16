@@ -17,13 +17,13 @@ class RoleSeeder extends Seeder
         DB::table('role')->insert([
             [
                 'id' => 1,
-                'role' => "kaprodi",
+                'role' => "Kaprodi",
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
                 'id' => 2,
-                'role' => "tu",
+                'role' => "Tata Usaha",
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],

@@ -60,5 +60,8 @@ class Mahasiswa extends Authenticatable
         return $this->hasMany(Surat::class, 'mahasiswa_nrp');
     }
 
-    
+    public function programStudi()
+    {
+        return $this->belongsTo(ProgramStudi::class);
+    } 
 }
