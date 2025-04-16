@@ -23,7 +23,7 @@ class KaryawanSeeder extends Seeder
                 'password' => Hash::make('password'),
                 'created_at' => now(),
                 'updated_at' => now(),
-                'program_studi_id' => 1,
+                'program_studi_id' => 4,
                 'role_id' => 1,
             ],
             [
@@ -33,7 +33,7 @@ class KaryawanSeeder extends Seeder
                 'password' => Hash::make('password'),
                 'created_at' => now(),
                 'updated_at' => now(),
-                'program_studi_id' => 1,
+                'program_studi_id' => 5,
                 'role_id' => 2,
             ],
             [
@@ -43,7 +43,7 @@ class KaryawanSeeder extends Seeder
                 'password' => Hash::make('password'),
                 'created_at' => now(),
                 'updated_at' => now(),
-                'program_studi_id' => 3,
+                'program_studi_id' => 5,
                 'role_id' => 1,
             ],
             [
@@ -53,7 +53,7 @@ class KaryawanSeeder extends Seeder
                 'password' => Hash::make('password'),
                 'created_at' => now(),
                 'updated_at' => now(),
-                'program_studi_id' => 3,
+                'program_studi_id' => 6,
                 'role_id' => 2,
             ],
         ]);

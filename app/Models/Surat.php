@@ -29,7 +29,7 @@ class Surat extends Model
 
     public function suratDetails()
     {
-        return $this->hasOne(SuratDetail::class, 'surat_id');
+        return $this->hasOne(SuratDetail::class, 'surat_id', 'id');
     }
 
     public function programStudi()

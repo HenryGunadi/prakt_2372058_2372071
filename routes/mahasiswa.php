@@ -15,7 +15,7 @@ Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
             ->name('login');
 
         Route::post('login', [AuthenticatedSessionController::class, 'store']);
-        
+
     });
 
     // Auth Routes

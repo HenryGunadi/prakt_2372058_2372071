@@ -60,5 +60,5 @@ class Karyawan extends Authenticatable
         return $this->belongsTo(Role::class, 'role_id', 'id');
     }
 
-    
+
 }
