@@ -60,8 +60,13 @@ class Karyawan extends Authenticatable
         return $this->belongsTo(Role::class, 'role_id', 'id');
     }
 
+<<<<<<< HEAD
         public function programStudi()
     {
         return $this->belongsTo(ProgramStudi::class);
     }   
 }
+=======
+
+}
+>>>>>>> 5c41c4472e85fdf1dccaed050a8e12ce9575e905

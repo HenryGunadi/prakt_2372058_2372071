@@ -55,7 +55,7 @@ class SuratController extends Controller
             'keperluan' => $request->keperluan ?? null,
             'subjek' => $request->subjek ?? null,
             'mata_kuliah' => $request->mata_kuliah ?? null,
-            'semester' => $request->$user->semester ?? null,
+            'semester' => $user->semester ?? null,
             'surat_id' => $surat->id,
         ]);
 
@@ -73,7 +73,7 @@ class SuratController extends Controller
         $surat->save();
         return redirect()->route('dashboard.index')->with('success', 'Surat disetujui.');
     }
-    
+
     public function reject($id) {
         $surat = Surat::findOrFail($id);
         $surat->status = 'rejected';
@@ -95,14 +95,102 @@ class SuratController extends Controller
 
     public function edit(Request $request, $id)
     {
+        // Log::channel("my_logs")->info('Form action: ', $request->action);
         $surat = Surat::findOrFail($id);
-        $suratDetail = $surat->suratDetails();
-        if ($request->input('action') === 'edit') {
-            $surat->status = 'approved';
-        } elseif ($request->input('action') === 'delete') {
+        $suratDetail = $surat->suratDetails;
+
+        if ($request->action === "delete") {
             $suratDetail->delete();
             $surat->delete();
-            return redirect()->back()->with('success', 'Surat berhasil didelete');
+            return redirect()->back()->with('status', 'Surat deleted');
+        } else {
+            try {
+                // Basic request logging
+                Log::channel("my_logs")->info('Edit method called with ID: ' . $id);
+                Log::channel("my_logs")->info('Request data: ', $request->all());
+
+                // Log before finding the surat
+                Log::channel("my_logs")->info('Attempting to find Surat with ID: ' . $id);
+
+                // Retrieve the surat by ID
+
+                // Log after finding the surat
+                Log::channel("my_logs")->info('Surat found with ID: ' . $surat->id);
+
+                // Log before validation
+                Log::channel("my_logs")->info('Starting validation');
+
+                try {
+                    // Log after successful validation
+                    Log::channel("my_logs")->info('Validation successful');
+                } catch (\Exception $e) {
+                    // Log validation errors
+                    Log::channel("my_logs")->error('Validation failed: ' . $e->getMessage());
+                    return redirect()->back()->withErrors($e->getMessage())->withInput();
+                }
+
+                // Log before getting suratDetails
+                Log::channel("my_logs")->info('Attempting to retrieve SuratDetail');
+
+                // Get the related suratDetail
+
+                // Log suratDetail status
+                // if ($suratDetail) {
+                //     Log::channel("my_logs")->info('SuratDetail found with ID: ' . $suratDetail->id);
+                // } else {
+                //     Log::channel("my_logs")->info('No SuratDetail found for Surat ID: ' . $surat->id);
+
+                //     // Try direct database query
+                //     $directCheck = \DB::table('surat_detail')->where('surat_id', $surat->id)->first();
+                //     if ($directCheck) {
+                //         Log::channel("my_logs")->info('Direct DB query found SuratDetail with ID: ' . $directCheck->id);
+                //     } else {
+                //         Log::channel("my_logs")->info('No SuratDetail found in direct DB query either');
+                //     }
+                // }
+
+                // Continue with update or create logic
+                if ($suratDetail) {
+                    Log::channel("my_logs")->info('Attempting to update SuratDetail');
+
+                    $suratDetail->update([
+                        'keperluan' => $request->keperluan,
+                        'subjek' => $request->subjek,
+                        'mata_kuliah' => $request->matkul,
+                        // Add these back if you're submitting them from the form
+                        //'semester' => $request->semester,
+                        //'alamat' => $request->alamat,
+                    ]);
+
+                    Log::channel("my_logs")->info('SuratDetail updated successfully');
+                } else {
+                    Log::channel("my_logs")->info('Creating new SuratDetail');
+
+                    // Create new SuratDetail
+                    SuratDetail::create([
+                        'surat_id' => $surat->id,
+                        'keperluan' => $request->keperluan,
+                        'subjek' => $request->subjek,
+                        'mata_kuliah' => $request->matkul,
+                        // Add these back if you're submitting them
+                        //'semester' => $request->semester,
+                        //'alamat' => $request->alamat,
+                    ]);
+
+                    Log::channel("my_logs")->info('New SuratDetail created successfully');
+                }
+
+                Log::channel("my_logs")->info('Redirecting with success message');
+                return redirect()->back()->with('status', 'Operation successful');
+            } catch (\Exception $e) {
+                // Catch any other exceptions
+                Log::channel("my_logs")->error('Exception caught: ' . $e->getMessage());
+                Log::channel("my_logs")->error('Stack trace: ' . $e->getTraceAsString());
+                return redirect()->back()->with('error', 'An error occurred while updating the surat');
+            };
         }
+
+        return redirect()->back()->with('status', 'Operation successful');
     }
+
 }
